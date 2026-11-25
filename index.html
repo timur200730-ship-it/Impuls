@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#08162d">
+  <meta name="description" content="ИМПУЛЬС — открой физику вокруг себя. Образовательная платформа для 7–11 классов.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <title>ИМПУЛЬС — Открой физику вокруг себя</title>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#home" data-page="home" aria-label="ИМПУЛЬС — главная">
+        <span class="brand-mark"><svg viewBox="0 0 64 52" aria-hidden="true"><path d="M5 28 20 5 39 28 20 47Z" fill="none" stroke="#a7eaff" stroke-width="2.5"/><path d="M20 5 39 28 20 47M5 28h34" fill="none" stroke="#6a8cff" stroke-width="2"/><path d="M1 28h22l5-9 5 19 6-14 5 4h18" fill="none" stroke="#00d8ff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span><strong>ИМПУЛЬС</strong><small>Открой физику вокруг себя</small></span>
+      </a>
+      <div class="side-label">ОБУЧЕНИЕ</div>
+      <nav class="nav-list" aria-label="Основная навигация">
+        <button class="nav-item active" data-page="home"><span>⌂</span>Главная</button>
+        <button class="nav-item" data-page="program"><span>▤</span>Школьная программа</button>
+        <button class="nav-item" data-page="lab"><span>⚗</span>Виртуальная лаборатория</button>
+        <button class="nav-item" data-page="life"><span>◉</span>Физика в жизни</button>
+        <button class="nav-item" data-page="simple"><span>✦</span>Объясни просто</button>
+        <button class="nav-item" data-page="tasks"><span>∑</span>Решение задач</button>
+        <button class="nav-item" data-page="tests"><span>◎</span>Проверка знаний</button>
+      </nav>
+      <div class="side-label extra-label">МОИ МАТЕРИАЛЫ</div>
+      <nav class="nav-list">
+        <button class="nav-item" data-page="glossary"><span>▣</span>Словарь</button>
+        <button class="nav-item" data-page="progress"><span>↗</span>Мой прогресс</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="offline-indicator"><i></i><span id="connection-status">Проверяем соединение…</span></div>
+        <small>Учебная платформа · 7–11 классы</small>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="icon-btn mobile-menu" id="menu-toggle" aria-label="Открыть меню">☰</button>
+        <div class="breadcrumbs" id="breadcrumbs">Главная</div>
+        <div class="top-actions">
+          <button class="icon-btn" id="search-toggle" aria-label="Поиск">⌕</button>
+          <button class="icon-btn" aria-label="Уведомления">♧</button>
+          <button class="profile-chip" title="Профиль">У</button>
+        </div>
+      </header>
+      <div class="search-row hidden" id="search-row">
+        <input id="search-input" type="search" placeholder="Найти тему, явление или формулу…">
+        <button class="primary-btn compact" id="search-submit">Найти</button>
+      </div>
+      <section id="page-content" class="page-content" aria-live="polite"></section>
+      <footer class="footer"><span>ИМПУЛЬС</span><span>Открой физику вокруг себя</span><span>Демонстрационный прототип</span></footer>
+    </main>
+  </div>
+  <nav class="mobile-bottom" aria-label="Нижняя навигация">
+    <button data-page="home" class="active"><span>⌂</span>Главная</button>
+    <button data-page="program"><span>▤</span>Классы</button>
+    <button data-page="lab"><span>⚗</span>Лаборатория</button>
+    <button data-page="progress"><span>↗</span>Прогресс</button>
+  </nav>
+  <script src="./app.js"></script>
+</body>
+</html>

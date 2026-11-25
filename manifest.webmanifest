@@ -1,0 +1,11 @@
+{
+  "name": "ИМПУЛЬС — Открой физику вокруг себя",
+  "short_name": "ИМПУЛЬС",
+  "description": "Образовательная платформа по физике для 7–11 классов",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071329",
+  "theme_color": "#08162d",
+  "icons": [{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
