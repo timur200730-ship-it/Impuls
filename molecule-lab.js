@@ -1,0 +1,16 @@
+(function(){
+function bindMoleculeModel(){
+ const canvas=document.getElementById("molecule-canvas");if(!canvas)return;
+ const ctx=canvas.getContext("2d"),temp=document.getElementById("molecule-temp"),mix=document.getElementById("molecule-mix");
+ const W=760,H=340;let phase="solid",mixed=false,particles=[],raf=0;
+ const info={solid:["Твёрдое состояние","Частицы расположены близко и упорядоченно. Они колеблются около устойчивых положений.","Низкая","Малые","Сохраняется"],liquid:["Жидкое состояние","Частицы находятся близко, но могут перемещаться и менять соседей. Жидкость сохраняет объём, но принимает форму сосуда.","Средняя","Малые","Принимает форму сосуда"],gas:["Газообразное состояние","Частицы движутся хаотично и находятся на сравнительно больших расстояниях. Газ заполняет весь доступный объём.","Высокая","Большие","Заполняет сосуд"]};
+ function seed(){particles=[];for(let i=0;i<64;i++){let x,y;if(phase==="solid"){x=145+(i%8)*67;y=40+Math.floor(i/8)*37}else if(phase==="liquid"){x=45+Math.random()*670;y=175+Math.random()*145}else{x=12+Math.random()*736;y=12+Math.random()*316}const v=.25+Number(temp.value)/65;particles.push({x,y,ox:x,oy:y,vx:(Math.random()-.5)*v,vy:(Math.random()-.5)*v,kind:mixed&&i>53?1:0,seed:Math.random()*6.28})}}
+ function labels(){const z=info[phase];document.getElementById("molecule-phase-title").textContent=z[0];document.getElementById("molecule-description").textContent=z[1];document.getElementById("molecule-motion").textContent=z[2];document.getElementById("molecule-distance").textContent=z[3];document.getElementById("molecule-shape").textContent=z[4]}
+ function draw(){ctx.fillStyle="#07182d";ctx.fillRect(0,0,W,H);ctx.strokeStyle="rgba(123,170,210,.10)";for(let x=0;x<W;x+=38){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=38){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}const k=.25+Number(temp.value)/42;particles.forEach((p,i)=>{if(phase==="solid"){p.x=p.ox+Math.sin(performance.now()/240+p.seed)*k*2;p.y=p.oy+Math.cos(performance.now()/260+p.seed)*k*2}else{p.x+=p.vx*k;p.y+=p.vy*k;if(phase==="liquid"){if(p.x<20||p.x>W-20)p.vx*=-1;if(p.y<170||p.y>H-15)p.vy*=-1}else{if(p.x<8||p.x>W-8)p.vx*=-1;if(p.y<8||p.y>H-8)p.vy*=-1}}ctx.beginPath();ctx.arc(p.x,p.y,p.kind?6:5.5,0,7);ctx.fillStyle=p.kind?"#ffc45b":"#58d7f3";ctx.shadowBlur=9;ctx.shadowColor=ctx.fillStyle;ctx.fill();ctx.shadowBlur=0});if(phase==="liquid"){ctx.strokeStyle="rgba(88,215,243,.4)";ctx.setLineDash([5,5]);ctx.strokeRect(12,165,W-24,H-177);ctx.setLineDash([])}raf=requestAnimationFrame(draw)}
+ document.querySelectorAll(".phase-btn").forEach(b=>b.addEventListener("click",()=>{phase=b.dataset.phase;document.querySelectorAll(".phase-btn").forEach(x=>x.classList.toggle("active",x===b));seed();labels()}));
+ temp.addEventListener("input",()=>{document.getElementById("molecule-temp-value").textContent=temp.value});
+ mix.addEventListener("click",()=>{mixed=!mixed;mix.textContent=mixed?"Убрать второе вещество":"Добавить второе вещество";seed()});
+ seed();labels();if(raf)cancelAnimationFrame(raf);draw();
+}
+window.bindMoleculeModel=bindMoleculeModel;
+})();
