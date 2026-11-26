@@ -12,7 +12,9 @@
 </head>
 <body>
   <div class="app-shell">
+    <button class="sidebar-backdrop" id="sidebar-backdrop" aria-label="Закрыть меню" tabindex="-1"></button>
     <aside class="sidebar" id="sidebar">
+      <div class="sidebar-mobile-head"><span>МЕНЮ</span><button type="button" id="menu-close" aria-label="Закрыть меню">×</button></div>
       <a class="brand" href="#home" data-page="home" aria-label="ИМПУЛЬС — главная">
         <span class="brand-mark"><svg viewBox="0 0 64 52" aria-hidden="true"><path d="M5 28 20 5 39 28 20 47Z" fill="none" stroke="#a7eaff" stroke-width="2.5"/><path d="M20 5 39 28 20 47M5 28h34" fill="none" stroke="#6a8cff" stroke-width="2"/><path d="M1 28h22l5-9 5 19 6-14 5 4h18" fill="none" stroke="#00d8ff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         <span><strong>ИМПУЛЬС</strong><small>Открой физику вокруг себя</small></span>
@@ -40,7 +42,7 @@
 
     <main class="main-area">
       <header class="topbar">
-        <button class="icon-btn mobile-menu" id="menu-toggle" aria-label="Открыть меню">☰</button>
+        <button class="icon-btn mobile-menu" id="menu-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">☰</button>
         <div class="breadcrumbs" id="breadcrumbs">Главная</div>
         <div class="top-actions">
           <button class="icon-btn" id="search-toggle" aria-label="Поиск">⌕</button>
