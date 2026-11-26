@@ -25,7 +25,7 @@ function setPage(page){
   if(!pageNames[page]) page="home";
   document.querySelectorAll("[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
   breadcrumbs.textContent=pageNames[page];
-  sidebar.classList.remove("open");
+  closeMobileMenu();
   const renderers={home:homePage,program:programPage,quests:questsPage,lab:labPage,life:lifePage,simple:simplePage,tasks:tasksPage,tests:testsPage,glossary:glossaryPage,progress:progressPage};
   pageContent.innerHTML=(renderers[page]||homePage)();
   pageContent.dataset.page=page;
@@ -66,7 +66,15 @@ function bindQuiz(){document.getElementById("quiz-check").addEventListener("clic
 function glossaryPage(){const terms=[["Ускорение","Физическая величина, показывающая, как быстро изменяется скорость тела."],["Сила","Векторная физическая величина — мера взаимодействия тел."],["Масса","Физическая величина, характеризующая инертные и гравитационные свойства тела."],["Давление","Физическая величина, равная отношению силы давления к площади поверхности."],["Энергия","Физическая величина, характеризующая способность системы совершать работу."]];return `<h1 class="page-title">Словарь физики</h1><p class="page-intro">Ключевые понятия, обозначения и единицы измерения. Словарь будет расширяться вместе с учебной программой.</p><div class="content-card">${terms.map(t=>`<div class="glossary-term"><strong>${t[0]}</strong><p>${t[1]}</p></div>`).join("")}</div>`}
 function progressPage(){return `<h1 class="page-title">Мой прогресс</h1><p class="page-intro">Здесь ученик сможет видеть пройденные темы, результаты тестов и материалы, к которым стоит вернуться.</p><div class="progress-panel"><div class="progress-ring"><span>${Math.min(100,Math.round(completed.length/25*100))}%</span></div><div><strong>Пройдено уроков: ${completed.length}</strong><p>Данные этого прототипа сохраняются на устройстве.</p></div></div><div class="section-head"><div><h2>Завершённые уроки</h2></div></div>${completed.length?`<div class="lesson-list">${completed.map(x=>`<div class="lesson-row"><span class="lesson-number">✓</span><strong>${x}</strong></div>`).join("")}</div>`:`<div class="content-card"><h3>Пока нет завершённых уроков</h3><p>Откройте школьную программу и отметьте первый урок как пройденный.</p><button class="primary-btn" data-go="program">Перейти к программе</button></div>`}`}
 document.addEventListener("click",e=>{const go=e.target.closest("[data-go]");if(go){setPage(go.dataset.go);return}const grade=e.target.closest("[data-grade]");if(grade){currentGrade=Number(grade.dataset.grade);setPage("program");return}const startQuest=e.target.closest("[data-start-diffusion]");if(startQuest){pageContent.innerHTML=diffusionPage();breadcrumbs.textContent="Квест · Диффузия";bindDiffusion();return}const lesson=e.target.closest("[data-lesson]");if(lesson){pageContent.innerHTML=lessonPage(lesson.dataset.lesson);breadcrumbs.textContent="Урок";document.getElementById("complete-lesson").addEventListener("click",()=>{if(!completed.includes(lesson.dataset.lesson))completed.push(lesson.dataset.lesson);localStorage.setItem("impuls-completed",JSON.stringify(completed));document.getElementById("complete-lesson").textContent="Урок сохранён ✓";});window.scrollTo(0,0);return}const concept=e.target.closest("[data-concept]");if(concept)showConcept(concept.dataset.concept)});
-document.getElementById("menu-toggle").addEventListener("click",()=>sidebar.classList.toggle("open"));
+const menuToggle=document.getElementById("menu-toggle");
+const menuBackdrop=document.getElementById("sidebar-backdrop");
+function openMobileMenu(){sidebar.classList.add("open");document.body.classList.add("menu-open");menuToggle.setAttribute("aria-expanded","true");}
+function closeMobileMenu(){sidebar.classList.remove("open");document.body.classList.remove("menu-open");menuToggle.setAttribute("aria-expanded","false");}
+menuToggle.addEventListener("click",()=>sidebar.classList.contains("open")?closeMobileMenu():openMobileMenu());
+document.getElementById("menu-close").addEventListener("click",closeMobileMenu);
+menuBackdrop.addEventListener("click",closeMobileMenu);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMobileMenu();});
+sidebar.querySelectorAll("[data-page]").forEach(item=>item.addEventListener("click",closeMobileMenu));
 document.getElementById("search-toggle").addEventListener("click",()=>{document.getElementById("search-row").classList.toggle("hidden");document.getElementById("search-input").focus()});
 document.getElementById("search-submit").addEventListener("click",()=>{const q=document.getElementById("search-input").value.trim();if(!q)return;setPage("simple");document.getElementById("simple-query").value=q;showConcept(q)});
 if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
