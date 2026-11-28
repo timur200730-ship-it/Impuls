@@ -29,7 +29,7 @@ function setPage(page){
   const renderers={home:homePage,program:programPage,quests:questsPage,lab:labPage,life:lifePage,simple:simplePage,tasks:tasksPage,tests:testsPage,glossary:glossaryPage,progress:progressPage};
   pageContent.innerHTML=(renderers[page]||homePage)();
   pageContent.dataset.page=page;
-  if(page==="lab"){updateSimulation();bindMoleculeModel();bindDensityLab();bindForceLab();bindFrictionAndResultant();bindHydrostaticLab();}
+  if(page==="lab"){updateSimulation();bindMoleculeModel();bindDensityLab();bindForceLab();bindFrictionAndResultant();bindHydrostaticLab();bindCommunicatingLab();}
   if(page==="program") bindGradeButtons();
   if(page==="simple") document.getElementById("simple-search-btn").addEventListener("click",searchSimple);
   if(page==="tests") bindQuiz();
